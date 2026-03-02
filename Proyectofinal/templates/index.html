@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Tienda de Periféricos MSI</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; max-width: 1000px; margin: auto; }
+        .producto { border: 1px solid #ccc; padding: 15px; margin-bottom: 10px; width: 280px; border-radius: 8px;}
+        .form-section { background: #f4f4f4; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+        input[type="text"], input[type="email"] { padding: 8px; margin: 5px 0; width: 90%; }
+        button { background-color: #e5252b; color: white; padding: 10px 20px; border: none; cursor: pointer; font-size: 16px; border-radius: 5px;}
+        button:hover { background-color: #bf1b20; }
+    </style>
+</head>
+<body>
+    <h1>Bienvenido a la Tienda de Periféricos</h1>
+    
+    <form action="/comprar" method="POST">
+        
+        <div class="form-section">
+            <h2>1. Ingresa tus datos</h2>
+            <input type="text" name="nombre" placeholder="Tu Nombre" required>
+            <input type="text" name="apellido" placeholder="Tu Apellido" required>
+            <input type="email" name="email" placeholder="Tu Correo Electrónico" required>
+        </div>
+
+        <h2>2. Selecciona tu producto</h2>
+        <div style="display: flex; flex-wrap: wrap; gap: 15px;">
+            {{range .}}
+            <div class="producto">
+                <h3>{{.Nombre}}</h3>
+                <p><strong>Marca:</strong> {{.Marca}}</p>
+                <p><strong>Precio:</strong> ${{.Precio}}</p>
+                <p><strong>Stock:</strong> {{.Stock}} unidades</p>
+                
+                {{if gt .Stock 0}}
+                    <label>
+                        <input type="radio" name="producto_id" value="{{.ID}}" required> 
+                        <strong>Seleccionar para comprar</strong>
+                    </label>
+                {{else}}
+                    <p style="color:red; font-weight: bold;">Agotado</p>
+                {{end}}
+            </div>
+            {{end}}
+        </div>
+        
+        <br>
+        <button type="submit">Confirmar Compra</button>
+    </form>
+</body>
+</html>
